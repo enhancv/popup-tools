@@ -2,23 +2,23 @@ language: node_js
 addons:
   sauce_connect: true
   hosts:
-    - popup-tools.dev
+  - popup-tools.dev
 node_js:
-  - 6
+- 6
 cache:
   directories:
-  - node_modules # NPM packages
+  - node_modules
 before_script:
-  - npm run build
-  - node test/express/app.js &
+- npm run build
+- node test/express/app.js &
 script:
-  - node_modules/.bin/eslint {src,test}
-  - node_modules/.bin/wdio wdio.travis.conf.js
+- node_modules/.bin/eslint {src,test}
+- node_modules/.bin/wdio wdio.travis.conf.js
 deploy:
   provider: npm
   email: ikerin@gmail.com
   api_key:
-    secure: pnzAVIiNUsex5AkGsuy3zZ7PR+EUFguJsx7pUxlCnj012XZ+95b/Ibjv5FvkcGvdqFTa4gX5PWfJo6gQyBZXJZoTLzNsi20ybaMyx9fnEIqZfEesMUJ8sveNEirY1U8tyiBaWNTY+CGJJgbZv3mEFC74vl+JnTVmQOKJenGDAviU2Yhgv1Ki2qWbuhgLsvJUKvBxQb1g84czSIYADglrZtpa/O9RiT7qEJTlsDbmc5oP+b5eb5PB+kiAX5UH8N5KFhiKOCGpkuU2yTWaaQHtA58ELdrs9Ma+yll5e8HFa5uvKkL+dz5AJ7+hTX4K6j3czN+0Upm6gIyFxGWrzlVRCLGdC/o8AicP+kECeAGcwhPHnURRxB/EX2Py7SW4JEvMxMJSrrtBfTtFaGX86KQJE9/2cUStZVmqU5FHR2l9M5bfi71gH6iAQaCt/iNVvj25nAKowADtw5i3EZNOsLnsKZDcYb4cecg07cPe0KRVa7B5XHGDZ2e9I5R9s8e5/iv6Gz1ot3dIfjgDkXXaos19CCEf/RuWo9VSOdJpO4awWzazPcQg33LTJri7iT1o4aySk9Jr2bdaWHTjmxNcO55Q8uh8lzU0CnNnNb+v+fOZwqMYvSKC/d+NgSc3iv6k+0GIZk3gInlPtsYtPWA/dHKqnCC2YjOTKszp9DSi5CPIWmk=
+    secure: T5r3EVFbDcbxIQi7zGPKSfbdFuIiYpRxwtYwJlhQYfYmzySBMQOnuUm2nDEq9agMGsibxt8u8C9IJaTzYIRs/wXlwMksnNGx+qCxqC5GdpObRY8vtWAdZ17JYSGkCLTci2d/8kU59F6hM6q/t9AzW+gtY0Cvh/BWmrf4Ph90yGselfehLzAdbFDbj+ECgxtUY+oM0gDLh54PhTViyizrQ2KBMropiD6fXJjAJyfFUzIdgCvhmlLLTyHuQ9pjqZ55QCnR9rqah/LtoMvxl0VOv7C7rcaWJN7EXH5zjHnxv7wBcvzQXP9aslsSYBYq+OvtlVp1Z36HAIOXQl9zUWRawSj5ElNBCJ/Ed0yHZbNM/kWY+l2DQx7xYVlr8//AL7MYIuG6N6LVUP47wO2WzCnfxh0qYK0R1tvAHe8KAvd0lAMM20W5e6Pe56yH1DvVpWl65MsiNOCKw/+cj2KnaWf5xrK+Hzl25xGbIkTG/kwBv7Z2Oe9Xv14WeXJy7b7Hm+KP9csKLXPb7GwSG/BOr9Kaq9h2onw13P24jjGRg2CEbcd0Qnqp6pYVksNQaMSA9SPkVi7fzJtjd2CNdt4bwoWBATg7l2230jEQB7NV08K3+MNhghJb99cxQw7+D6ZfZIe0qlcPhK76dXLMJ7q6oOH/TdL43G2Ral1s6RG/NMwyGVo=
   on:
     tags: true
     repo: enhancv/popup-tools
