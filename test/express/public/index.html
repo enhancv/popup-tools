@@ -34,13 +34,13 @@
             </button>
             Result: <span id="result"></span>
         </div>
-        <script type="text/javascript" src="/src/PopupTools.js"></script>
+        <script type="text/javascript" src="/lib/PopupTools.js"></script>
         <script type="text/javascript">
             var result = document.getElementById('result');
 
             document.getElementById('popup1').onclick = function () {
                 result.textContent = '';
-                popup('/test.html', 'Test', {}, function (err, data) {
+                popupTools.popup('/test.html', 'Test', {}, function (err, data) {
                     if (err) {
                         result.textContent = 'Closed with ' + err.message;
                     } else {
@@ -51,7 +51,7 @@
 
             document.getElementById('popup2').onclick = function () {
                 result.textContent = '';
-                popup('/popup-response.html', 'Popup with response', {}, function (err, data) {
+                popupTools.popup('/popup-response.html', 'Popup with response', {}, function (err, data) {
                     if (err) {
                         result.textContent = 'Closed with ' + err.message;
                     } else {
@@ -62,7 +62,7 @@
 
             document.getElementById('popup3').onclick = function () {
                 result.textContent = '';
-                popup(
+                popupTools.popup(
                     '/test.html',
                     'Popup with dimensions',
                     { width: 200, height: 100, centered: false },
@@ -78,7 +78,7 @@
 
             document.getElementById('popup4').onclick = function () {
                 result.textContent = '';
-                popup(
+                popupTools.popup(
                     '/test.html',
                     'Popup with position',
                     { top: 300, left: 200, width: 200, height: 200 },
@@ -94,7 +94,7 @@
 
             document.getElementById('popup5').onclick = function () {
                 result.textContent = '';
-                popupWithPost('/post', { msg: 'test post' }, 'Post-Popup', {}, function (err, data) {
+                popupTools.popupWithPost('/post', { msg: 'test post' }, 'Post-Popup', {}, function (err, data) {
                     if (err) {
                         result.textContent = 'Closed with ' + err.message;
                     } else {

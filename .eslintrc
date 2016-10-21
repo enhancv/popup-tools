@@ -1,0 +1,16 @@
+{
+  "extends": "eslint-config-airbnb-base/legacy",
+  "env": {
+    "node": true,
+    "mocha": true,
+  },
+  "globals": {
+  	"browser": true,
+  },
+  "rules": {
+    "indent": [2, 4],
+    "guard-for-in": [0],
+    "no-restricted-syntax": [0],
+    "comma-dangle": ["error", "always-multiline"],
+  }
+}

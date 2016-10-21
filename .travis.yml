@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - 6
+script:
+  - node_modules/.bin/eslint {src,test}
+  - node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- -R spec
+before_deploy:
+  - rm -rf coverage
+deploy:
+  provider: npm
+  email: ikerin@gmail.com
+  api_key:
+    secure: pnzAVIiNUsex5AkGsuy3zZ7PR+EUFguJsx7pUxlCnj012XZ+95b/Ibjv5FvkcGvdqFTa4gX5PWfJo6gQyBZXJZoTLzNsi20ybaMyx9fnEIqZfEesMUJ8sveNEirY1U8tyiBaWNTY+CGJJgbZv3mEFC74vl+JnTVmQOKJenGDAviU2Yhgv1Ki2qWbuhgLsvJUKvBxQb1g84czSIYADglrZtpa/O9RiT7qEJTlsDbmc5oP+b5eb5PB+kiAX5UH8N5KFhiKOCGpkuU2yTWaaQHtA58ELdrs9Ma+yll5e8HFa5uvKkL+dz5AJ7+hTX4K6j3czN+0Upm6gIyFxGWrzlVRCLGdC/o8AicP+kECeAGcwhPHnURRxB/EX2Py7SW4JEvMxMJSrrtBfTtFaGX86KQJE9/2cUStZVmqU5FHR2l9M5bfi71gH6iAQaCt/iNVvj25nAKowADtw5i3EZNOsLnsKZDcYb4cecg07cPe0KRVa7B5XHGDZ2e9I5R9s8e5/iv6Gz1ot3dIfjgDkXXaos19CCEf/RuWo9VSOdJpO4awWzazPcQg33LTJri7iT1o4aySk9Jr2bdaWHTjmxNcO55Q8uh8lzU0CnNnNb+v+fOZwqMYvSKC/d+NgSc3iv6k+0GIZk3gInlPtsYtPWA/dHKqnCC2YjOTKszp9DSi5CPIWmk=
+  on:
+    tags: true
+    repo: enhancv/popup-tools

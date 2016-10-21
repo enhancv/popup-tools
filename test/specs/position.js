@@ -1,18 +1,28 @@
-const assert = require('chai').assert;
+/* eslint-disable func-names */
+var assert = require('chai').assert;
 
 describe('Position', function () {
     it('should open a popup with different position', function () {
-        browser.url('/');
-        const baseWindow = browser.windowHandle().value;
-        browser.click('#popup4');
+        var baseWindow;
+        var popupWindow;
+        var size;
+        var pos;
 
-        const popupWindow = browser.getTabIds().find(handle => handle !== baseWindow);
+        browser.url('/');
+        baseWindow = browser.windowHandle().value;
+        browser.click('#popup4');
+        popupWindow = browser
+            .getTabIds()
+            .find(function isNotBaseWindow(handle) {
+                return handle !== baseWindow;
+            });
+
         browser.switchTab(popupWindow);
 
         browser.waitForExist('h1');
 
-        const size = browser.windowHandleSize();
-        const pos = browser.windowHandlePosition();
+        size = browser.windowHandleSize();
+        pos = browser.windowHandlePosition();
 
         assert.closeTo(size.value.width, 200, 100);
         assert.closeTo(size.value.height, 200, 100);
