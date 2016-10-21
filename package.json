@@ -1,0 +1,25 @@
+{
+  "name": "popup-tools",
+  "version": "1.0.0",
+  "description": "Popups with events, post and callbacks",
+  "main": "lib/index.js",
+  "repository": {
+    "url": "git@github.com:enhancv/popup-tools.git",
+    "type": "git"
+  },
+  "author": "Ivan Kerin <ikerin@gmail.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "body-parser": "^1.15.2",
+    "chai": "^3.5.0",
+    "express": "^4.14.0",
+    "wdio-mocha-framework": "^0.4.3",
+    "wdio-sauce-service": "^0.2.5",
+    "wdio-selenium-standalone-service": "0.0.7",
+    "webdriverio": "^4.2.16"
+  },
+  "scripts": {
+    "test" : "node_modules/.bin/wdio wdio.conf.js"
+  }
+}
