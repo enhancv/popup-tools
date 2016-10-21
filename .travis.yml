@@ -3,6 +3,9 @@ addons:
   sauce_connect: true
 node_js:
   - 6
+cache:
+  directories:
+  - node_modules # NPM packages
 script:
   - node_modules/.bin/eslint {src,test}
   - node_modules/.bin/wdio wdio.travis.conf.js
