@@ -2,7 +2,7 @@
   "name": "popup-tools",
   "version": "0.1.0",
   "description": "Popups with events, post and callbacks",
-  "main": "src/PopupTools.js",
+  "main": "lib/PopupTools.js",
   "repository": {
     "url": "git@github.com:enhancv/popup-tools.git",
     "type": "git"
@@ -22,6 +22,7 @@
     "webdriverio": "^4.2.16"
   },
   "scripts": {
-    "test": "node_modules/.bin/wdio wdio.conf.js"
+    "test": "node_modules/.bin/wdio wdio.conf.js",
+    "build": "node_modules/.bin/umd popupTools < src/PopupTools.js > lib/PopupTools.js"
   }
 }
