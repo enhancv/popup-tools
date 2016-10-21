@@ -18,7 +18,6 @@ describe('Position', function () {
             });
 
         browser.switchTab(popupWindow);
-
         browser.waitForExist('h1');
 
         size = browser.windowHandleSize();

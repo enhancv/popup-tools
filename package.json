@@ -18,6 +18,7 @@
     "express": "^4.14.0",
     "umd": "^3.0.1",
     "wdio-mocha-framework": "^0.4.3",
+    "wdio-phantomjs-service": "^0.2.2",
     "wdio-sauce-service": "^0.2.5",
     "webdriverio": "^4.2.16"
   },

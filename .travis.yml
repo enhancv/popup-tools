@@ -1,11 +1,13 @@
 language: node_js
+addons:
+  sauce_connect: true
 node_js:
   - 6
 script:
   - node_modules/.bin/eslint {src,test}
-  - node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- -R spec
+  - node_modules/.bin/wdio wdio.travis.conf.js
 before_deploy:
-  - rm -rf coverage
+  - cat src/PopupTools.js | node_modules/.bin/umd popupTools > lib/PopupTools.js
 deploy:
   provider: npm
   email: ikerin@gmail.com
