@@ -13,13 +13,13 @@ exports.config = {
     coloredLogs: true,
     screenshotPath: './errorShots/',
     baseUrl: 'http://popup-tools.dev:8080',
-    waitforTimeout: 20000,
+    waitforTimeout: 10000,
     connectionRetryTimeout: 90000,
     connectionRetryCount: 3,
     services: [],
     framework: 'mocha',
     mochaOpts: {
         ui: 'bdd',
-        timeout: 40000,
+        timeout: 20000,
     },
 };
