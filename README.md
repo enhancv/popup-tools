@@ -16,7 +16,34 @@ popupTools.popup('/popup-url.html', 'My Popup', { width: 400, height: 100 }, fun
 
 popupTools.popupWithPost('/some-form-submit', { data: 'some data' }, 'My Form', { width: 400, height: 100 }, function (err) {
     // this executes when closed
-}));
+});
+```
+
+## Data reponse
+
+You can also send data back from the popup to the server
+
+```javascript
+
+// Server (express)
+var popupTools = require('popup-tools');
+
+app.get('/postback', function (req, res) {
+    res.send(popupTools.popupResponse({ some_data: 'data' }));
+});
+
+// Client
+var popupTools = require('popup-tools');
+
+popupTools.popup('/postback', 'My Popup', { width: 400, height: 100 }, function (err, data) {
+    // this executes when closed
+    if (err) {
+        // Closed by user
+    } else {
+        // Data returned by the server
+        console.log(data)
+    }
+});
 ```
 
 ## License
