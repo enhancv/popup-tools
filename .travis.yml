@@ -9,7 +9,7 @@ cache:
   directories:
   - node_modules # NPM packages
 before_script:
-  - cat src/PopupTools.js | node_modules/.bin/umd popupTools > lib/PopupTools.js
+  - node_modules/.bin/umd popupTools < src/PopupTools.js > lib/PopupTools.js
   - node test/express/app.js &
 script:
   - node_modules/.bin/eslint {src,test}
