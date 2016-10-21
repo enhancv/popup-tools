@@ -1,6 +1,6 @@
 {
   "name": "popup-tools",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Popups with events, post and callbacks",
   "main": "lib/PopupTools.js",
   "repository": {
