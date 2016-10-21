@@ -28,9 +28,12 @@ function defaultPopupName() {
 
 function optionsResolveCentered(options) {
     var result = options;
+    var width = window.outerWidth - options.width;
+    var height = window.outerHeight - options.height;
+
     if (options.centered) {
-        result.left = options.left || Math.round(window.screenX + ((window.outerWidth - options.width) / 2));
-        result.top = options.top || Math.round(window.screenY + ((window.outerHeight - options.height) / 2.5));
+        result.left = options.left || Math.round(window.screenX + (width / 2));
+        result.top = options.top || Math.round(window.screenY + (height / 2.5));
         delete result.centered;
     }
     return result;
