@@ -1,6 +1,7 @@
 # express-braintree-webhooks
 [![Build Status](https://travis-ci.org/enhancv/popup-tools.svg?branch=master)](https://travis-ci.org/enhancv/popup-tools)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/55a5fbd27a854788942d5643daf090ff)](https://www.codacy.com/app/ivank/popup-tools)
+[![Build Status](https://saucelabs.com/buildstatus/popup-tools)](https://saucelabs.com/beta/builds/f8ded43de77249b496634e73d573018f)
 
 Tools for handling popups
 
