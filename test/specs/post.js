@@ -21,5 +21,5 @@ describe('Post', function () {
         browser.close();
 
         assert.equal(browser.getText('#result'), 'Closed with Popup closed');
-    });
+    }, 2);
 });
