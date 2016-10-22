@@ -22,7 +22,7 @@
     "webdriverio": "^4.2.16"
   },
   "files": [
-    "lib/",
+    "lib/"
   ],
   "scripts": {
     "test": "node_modules/.bin/wdio wdio.conf.js",
