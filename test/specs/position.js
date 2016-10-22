@@ -32,5 +32,5 @@ describe('Position', function () {
         browser.close();
 
         assert.equal(browser.getText('#result'), 'Closed with Popup closed');
-    }, 2);
+    }, 3);
 });

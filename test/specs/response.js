@@ -26,5 +26,5 @@ describe('Response', function () {
         });
         browser.switchTab(baseWindow);
         assert.equal(browser.getText('#result'), 'Data{"msg1":"Responded Successfully"}');
-    }, 2);
+    }, 3);
 });
