@@ -25,6 +25,6 @@
     "lint": "node_modules/.bin/eslint {src,test}",
     "test-selenium": "node_modules/.bin/wdio wdio.conf.js",
     "test": "node_modules/.bin/wdio wdio.travis.conf.js",
-    "build": "node_modules/.bin/umd popupTools < src/PopupTools.js > lib/PopupTools.js"
+    "build": "mkdir -p lib/ && node_modules/.bin/umd popupTools < src/PopupTools.js > lib/PopupTools.js"
   }
 }
