@@ -1,6 +1,6 @@
 {
   "name": "popup-tools",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Popups with events, post and callbacks",
   "main": "lib/PopupTools.js",
   "repository": {
@@ -21,9 +21,6 @@
     "wdio-sauce-service": "^0.2.5",
     "webdriverio": "^4.2.16"
   },
-  "files": [
-    "lib/PopupTools.js"
-  ],
   "scripts": {
     "lint": "node_modules/.bin/eslint {src,test}",
     "test-selenium": "node_modules/.bin/wdio wdio.conf.js",
