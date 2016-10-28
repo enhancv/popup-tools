@@ -85,9 +85,10 @@ document.getElementById("button").onclick = function () {
         if (err) {
             alert(err.message);
         } else {
-            // save the returned user in localStorage/cookie
+            // save the returned user in localStorage/cookie or something
         }
-    })
+    });
+};
 </script>
 ```
 
