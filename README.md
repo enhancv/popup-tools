@@ -72,6 +72,51 @@ popupTools.popup('/postback', 'My Popup', { width: 400, height: 100 }, function 
 });
 ```
 
+## A full express & passport-facebook example
+
+On the clinet you could have something like:
+
+```html
+<button id="button">Facebook Login</button>
+<script src=".../PopupTools.min.js"></script>
+<script>
+document.getElementById("button").onclick = function () {
+    popupTools.popup('/popup-url', "Facebook Connect", {}, function (err, user) {
+        if (err) {
+            alert(err.message);
+        } else {
+            // save the returned user in localStorage/cookie
+        }
+    })
+</script>
+```
+
+And on the server:
+
+```javascript
+var passport = require('passport');
+var FacebookStrategy = require('passport-facebook').Strategy;
+
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_ID,
+    clientSecret: process.env.FACEBOOK_SECRET,
+    callbackURL: '/calback-url',
+}, function (accessToken, refreshToken, profile, done) {
+    // process facebook profile into user
+}));
+
+var express = require('express');
+var app = express();
+
+app.post('/popup-url', passport.authenticate('facebook'))
+app.get('/callback-url',
+    passport.authenticate('facebook'),
+    function (req, res) {
+        res.end(popupTools.popupResponse(req.user))
+    }
+);
+```
+
 ## License
 Copyright (c) 2016 Enhancv
 Licensed under the MIT license.
