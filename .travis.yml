@@ -2,24 +2,35 @@ language: node_js
 addons:
   sauce_connect: true
   hosts:
-  - popup-tools.dev
+    - popup-tools.dev
 node_js:
-- 6
+  - 6
 cache:
   directories:
-  - node_modules
+    - node_modules
 before_script:
-- npm run build
-- node test/express/app.js &
+  - npm run build
+  - node test/express/app.js &
 script:
-- npm run lint
-- npm test
+  - npm run lint
+  - npm test
+before_deploy:
+  - node_modules/.bin/uglifyjs lib/PopupTools.js  > lib/PopupTools.min.js
+  - zip -r PopupTools.zip lib src LICENSE README.md
 deploy:
-  provider: npm
-  email: ikerin@gmail.com
-  skip_cleanup: true
-  api_key:
-    secure: T5r3EVFbDcbxIQi7zGPKSfbdFuIiYpRxwtYwJlhQYfYmzySBMQOnuUm2nDEq9agMGsibxt8u8C9IJaTzYIRs/wXlwMksnNGx+qCxqC5GdpObRY8vtWAdZ17JYSGkCLTci2d/8kU59F6hM6q/t9AzW+gtY0Cvh/BWmrf4Ph90yGselfehLzAdbFDbj+ECgxtUY+oM0gDLh54PhTViyizrQ2KBMropiD6fXJjAJyfFUzIdgCvhmlLLTyHuQ9pjqZ55QCnR9rqah/LtoMvxl0VOv7C7rcaWJN7EXH5zjHnxv7wBcvzQXP9aslsSYBYq+OvtlVp1Z36HAIOXQl9zUWRawSj5ElNBCJ/Ed0yHZbNM/kWY+l2DQx7xYVlr8//AL7MYIuG6N6LVUP47wO2WzCnfxh0qYK0R1tvAHe8KAvd0lAMM20W5e6Pe56yH1DvVpWl65MsiNOCKw/+cj2KnaWf5xrK+Hzl25xGbIkTG/kwBv7Z2Oe9Xv14WeXJy7b7Hm+KP9csKLXPb7GwSG/BOr9Kaq9h2onw13P24jjGRg2CEbcd0Qnqp6pYVksNQaMSA9SPkVi7fzJtjd2CNdt4bwoWBATg7l2230jEQB7NV08K3+MNhghJb99cxQw7+D6ZfZIe0qlcPhK76dXLMJ7q6oOH/TdL43G2Ral1s6RG/NMwyGVo=
-  on:
-    tags: true
-    repo: enhancv/popup-tools
+  - provider: releases
+    file: PopupTools.zip
+    skip_cleanup: true
+    api_key:
+      secure: Qy5ki/6ph2MwPbGfhiE2SwvU0k5VpnXo4x1Jc/K2l02piZQ4+zEh8le1uP6WiZ5yIToMryYBUhGAw+s7HkKM4Ig224etENNfccX5nhHC5xYKYuwzjKYZbPjNP0IOirQZNLTuI9rcHushQunM7pgAVIriIYiZ12sPhj2IUnZcePMbgUssqYsyPzTI8pmKiuD3kqPgNQ3aWKvUbOKWZMGwSlySbxM2vKJ1R+UeXiwGjGUyJZSpcm6Vtzx1fQPrd3g2yvptx+1KX86LHU2ryC6yOGs2ZT/eIa47+TPDF9zofysb1N8fmV2IbvWVXFWcrcsoEvdFZkeXmbH1FNp1xSaTLwUorrr+KEjIJ4VlFhu8PmyWoKiCEvbHVnuO7bxuYBhyj+RyEWMMSavU1EOW4i9ouWwrhP1OQvV+vWI36w9foDJZ+FcqG5p/gd2OTmJguKjssqgf+KLGE/tDISmmlTbdRx9KOTMY3uoH4Avn2eC93qUe+/KrQ8go1FDqga/jbK1acXtSV1jmT/0nVYeT7nWq0rN/lZQVZSSkXibJ734MQ0oZdhukCEEkSRrt1C8RBVzFnZkL0wbgcq51leTMdG9CrgmLIYQrSI4GpyFOuqyGV/YKVf+OBEcHigsvGysC7iNxRF0+FMExCPDDItOAVzfvd7tClfYQ9vI2D//1tb+yaqg=
+    on:
+      tags: true
+      repo: enhancv/popup-tools
+  - provider: npm
+    email: ikerin@gmail.com
+    skip_cleanup: true
+    api_key:
+      secure: T5r3EVFbDcbxIQi7zGPKSfbdFuIiYpRxwtYwJlhQYfYmzySBMQOnuUm2nDEq9agMGsibxt8u8C9IJaTzYIRs/wXlwMksnNGx+qCxqC5GdpObRY8vtWAdZ17JYSGkCLTci2d/8kU59F6hM6q/t9AzW+gtY0Cvh/BWmrf4Ph90yGselfehLzAdbFDbj+ECgxtUY+oM0gDLh54PhTViyizrQ2KBMropiD6fXJjAJyfFUzIdgCvhmlLLTyHuQ9pjqZ55QCnR9rqah/LtoMvxl0VOv7C7rcaWJN7EXH5zjHnxv7wBcvzQXP9aslsSYBYq+OvtlVp1Z36HAIOXQl9zUWRawSj5ElNBCJ/Ed0yHZbNM/kWY+l2DQx7xYVlr8//AL7MYIuG6N6LVUP47wO2WzCnfxh0qYK0R1tvAHe8KAvd0lAMM20W5e6Pe56yH1DvVpWl65MsiNOCKw/+cj2KnaWf5xrK+Hzl25xGbIkTG/kwBv7Z2Oe9Xv14WeXJy7b7Hm+KP9csKLXPb7GwSG/BOr9Kaq9h2onw13P24jjGRg2CEbcd0Qnqp6pYVksNQaMSA9SPkVi7fzJtjd2CNdt4bwoWBATg7l2230jEQB7NV08K3+MNhghJb99cxQw7+D6ZfZIe0qlcPhK76dXLMJ7q6oOH/TdL43G2Ral1s6RG/NMwyGVo=
+    on:
+      tags: true
+      repo: enhancv/popup-tools

@@ -12,6 +12,12 @@ var defaultOptions = {
 
 var popupCount = 1;
 
+/**
+ * Return options converted to a string
+ *
+ * @param  {Object} options
+ * @return {String}
+ */
 function optionsToString(options) {
     return Object
         .keys(options)
@@ -21,11 +27,22 @@ function optionsToString(options) {
         .join(',');
 }
 
+/**
+ * Get a unique name on each call
+ * @return {String}
+ */
 function defaultPopupName() {
     popupCount += 1;
     return 'Popup ' + (popupCount);
 }
 
+/**
+ * Convert "centered: true" key into concrete left and top arguments
+ * Both can be overwritten
+ *
+ * @param  {Object} options
+ * @return {Object}
+ */
 function optionsResolveCentered(options) {
     var result = options;
     var width = window.outerWidth - options.width;
@@ -39,6 +56,13 @@ function optionsResolveCentered(options) {
     return result;
 }
 
+/**
+ * Polyfill Object.assign
+ *
+ * @param  {Object} target
+ * @param  {Object} source1 ...
+ * @return {Object}
+ */
 function assign(target) {
     var sources = Array.prototype.slice.call(arguments, 1);
 
@@ -55,6 +79,16 @@ function assign(target) {
     return sources.reduce(assignArgument, target);
 }
 
+/**
+ * Create a form element, add hidden inputs for all the post data
+ * and post it into a newly opened popup
+ *
+ * @param  {String} url
+ * @param  {Object} postData
+ * @param  {String} name
+ * @param  {Object} options
+ * @return {Object}
+ */
 function openPopupWithPost(url, postData, name, options) {
     var form = document.createElement('form');
     var win;
@@ -84,6 +118,17 @@ function openPopupWithPost(url, postData, name, options) {
     return win;
 }
 
+/**
+ * Open a popup using the first argument. Wait for it to close.
+ * Returns the window object
+ *
+ * @param  {Function}
+ * @param  {String}
+ * @param  {String}
+ * @param  {Object}
+ * @param  {Function}
+ * @return {Object}
+ */
 function popupExecute(execute, url, name, options, callback) {
     var popupName = name || defaultPopupName();
     var popupOptions = optionsResolveCentered(assign({ }, defaultOptions, options));
@@ -117,12 +162,40 @@ function popupExecute(execute, url, name, options, callback) {
     } else {
         popupCallback(new Error('Popup blocked'));
     }
+
+    return win;
 }
 
+/**
+ * Open a popup using the first argument.
+ * Wait for it to close and call the callback.
+ * Set the options string using the options object
+ * Returns the window object
+ *
+ * @param  {String} url
+ * @param  {String} name
+ * @param  {Object} options
+ * @param  {Function} callback
+ * @return {Object}
+ */
 function popup(url, name, options, callback) {
     return popupExecute(window.open, url, name, options, callback);
 }
 
+/**
+ * Open a popup using the first argument.
+ * Post the data into the open popup.
+ * Wait for it to close and call the callback.
+ * Set the options string using the options object
+ * Returns the window object
+ *
+ * @param  {String} url
+ * @param  {Object} postData
+ * @param  {String} name
+ * @param  {Object} options
+ * @param  {Function} callback
+ * @return {Object}
+ */
 function popupWithPost(url, postData, name, options, callback) {
     function openWithPostData(popupUrl, popupName, optionsString) {
         return openPopupWithPost(popupUrl, postData, popupName, optionsString);
@@ -131,6 +204,12 @@ function popupWithPost(url, postData, name, options, callback) {
     return popupExecute(openWithPostData, url, name, options, callback);
 }
 
+/**
+ * Return html that when executed, will trigger the popup to callback with a response
+ *
+ * @param  {Object}
+ * @return {String}
+ */
 function popupResponse(data) {
     var jsonData = JSON.stringify(data);
 

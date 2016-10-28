@@ -1,6 +1,6 @@
 {
   "name": "popup-tools",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "description": "Popups with events, post and callbacks",
   "main": "lib/PopupTools.js",
   "repository": {
@@ -16,6 +16,7 @@
     "eslint": "^3.8.1",
     "eslint-config-airbnb-base": "^9.0.0",
     "express": "^4.14.0",
+    "uglify-js": "^2.7.4",
     "umd": "^3.0.1",
     "wdio-mocha-framework": "^0.4.3",
     "wdio-sauce-service": "^0.2.5",
