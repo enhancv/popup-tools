@@ -14,11 +14,11 @@ Its built with UMD so you can include it with any package manager as well as use
 
 There are 3 methods in this package
 
------------------------------------------------------------------------------------------------------------------------------------------------------------
 | popup (url, title, options, callback)      | Open a simple popup, and call the callback method on close                                                 |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
 | popupWithPost (url, post, title, callback) | Open a popup and post the data into it. Again wait for callback                                            |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
 | popupResponse (data)                       | Called on the server as a response to the popup, will trigger the callback to be called with that response |
------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 You can open popup windows, and recieve a callback whenever the window was closed. Options are also passed as an object, and not as a string, as is generally required.
 
