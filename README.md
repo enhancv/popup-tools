@@ -14,11 +14,11 @@ Its built with UMD so you can include it with any package manager as well as use
 
 There are 3 methods in this package
 
-| popup (url, title, options, callback)      | Open a simple popup, and call the callback method on close                                                 |
-| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
-| popupWithPost (url, post, title, callback) | Open a popup and post the data into it. Again wait for callback                                            |
-| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
-| popupResponse (data)                       | Called on the server as a response to the popup, will trigger the callback to be called with that response |
+| Function                                     | Description                                                                                                |
+| -------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `popup (url, title, options, callback)`      | Open a simple popup, and call the callback method on close                                                 |
+| `popupWithPost (url, post, title, callback)` | Open a popup and post the data into it. Again wait for callback                                            |
+| `popupResponse (data)`                       | Called on the server as a response to the popup, will trigger the callback to be called with that response |
 
 You can open popup windows, and recieve a callback whenever the window was closed. Options are also passed as an object, and not as a string, as is generally required.
 
@@ -32,6 +32,17 @@ popupTools.popup('/popup-url.html', 'My Popup', { width: 400, height: 100 }, fun
 popupTools.popupWithPost('/some-form-submit', { data: 'some data' }, 'My Form', { width: 400, height: 100 }, function (err) {
     // this executes when closed
 });
+```
+
+If you're including the file directly into your HTML without package managers, it will add `popupTools` to the global window object.
+
+```html
+<script src=".../PopupTools.min.js" ></script>
+<script>
+    popupTools.popup('/popup-url.html', 'My Popup', { width: 400, height: 100 }, function (err) {
+        // this executes when closed
+    }));
+</script>
 ```
 
 ## Data reponse
