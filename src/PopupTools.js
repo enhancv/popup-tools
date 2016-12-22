@@ -153,10 +153,12 @@ function popupExecute(execute, url, name, options, callback) {
     if (win) {
         interval = setInterval(function closePopupCallback() {
             if (win == null || win.closed) {
-                clearInterval(interval);
-                if (!isMessageSent) {
-                    popupCallback(new Error('Popup closed'));
-                }
+                setTimeout(function delayWindowClosing () {
+                    clearInterval(interval);
+                    if (!isMessageSent) {
+                        popupCallback(new Error('Popup closed'));
+                    }
+                }, 500);
             }
         }, 100);
     } else {
