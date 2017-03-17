@@ -109,7 +109,7 @@ function openPopupWithPost(url, postData, name, options) {
 
     document.body.appendChild(form);
 
-    win = window.open('about:blank', name, options);
+    win = window.open('/', name, options);
     win.document.write('Loading...');
 
     form.submit();
