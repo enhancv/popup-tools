@@ -20,6 +20,6 @@ describe('Post', function () {
         assert.equal(browser.getText('h1'), '{"msg":"test post"}');
         browser.close();
 
-        assert.equal(browser.getText('#result'), 'Closed with Popup closed');
+        browser.waitUntil(() => browser.getText('#result') === 'Closed with Popup closed');
     }, 3);
 });

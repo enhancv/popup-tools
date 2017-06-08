@@ -25,6 +25,6 @@ describe('Response', function () {
             return !browser.getTabIds().includes(popupWindow);
         });
         browser.switchTab(baseWindow);
-        assert.equal(browser.getText('#result'), 'Data{"msg1":"Responded Successfully"}');
+        browser.waitUntil(() => browser.getText('#result') === 'Data{"msg1":"Responded Successfully"}');
     }, 3);
 });
