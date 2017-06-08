@@ -138,13 +138,19 @@ function popupExecute(execute, url, name, options, callback) {
     var isMessageSent = false;
     var interval;
 
+    function popupCallbackOnce(err, data) {
+        if (!isMessageSent) {
+            isMessageSent = true;
+            popupCallback(err, data);
+        }
+    }
+
     function onMessage(message) {
         var data = message ? message.data : undefined;
 
         if (data) {
-            isMessageSent = true;
+            popupCallbackOnce(undefined, data);
             window.removeEventListener('message', onMessage);
-            popupCallback(undefined, data);
         }
     }
 
@@ -155,14 +161,12 @@ function popupExecute(execute, url, name, options, callback) {
             if (win == null || win.closed) {
                 setTimeout(function delayWindowClosing () {
                     clearInterval(interval);
-                    if (!isMessageSent) {
-                        popupCallback(new Error('Popup closed'));
-                    }
+                    popupCallbackOnce(new Error('Popup closed'));
                 }, 500);
             }
         }, 100);
     } else {
-        popupCallback(new Error('Popup blocked'));
+        popupCallbackOnce(new Error('Popup blocked'));
     }
 
     return win;

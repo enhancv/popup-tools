@@ -31,6 +31,6 @@ describe('Position', function () {
 
         browser.close();
 
-        assert.equal(browser.getText('#result'), 'Closed with Popup closed');
+        browser.waitUntil(() => browser.getText('#result') === 'Closed with Popup closed');
     }, 3);
 });
