@@ -11,9 +11,6 @@ cache:
 before_script:
   - npm run build
   - node test/express/app.js &
-script:
-  - npm run lint
-  - npm test
 before_deploy:
   - node_modules/.bin/uglifyjs lib/PopupTools.js  > lib/PopupTools.min.js
   - zip -r PopupTools.zip lib src LICENSE README.md

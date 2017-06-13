@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
 var defaultOptions = {
     width: 700,
     height: 520,
-    menubar: 'no',
-    resizable: 'yes',
-    location: 'yes',
-    scrollbars: 'no',
+    menubar: "no",
+    resizable: "yes",
+    location: "yes",
+    scrollbars: "no",
     centered: true,
 };
 
@@ -19,12 +19,11 @@ var popupCount = 1;
  * @return {String}
  */
 function optionsToString(options) {
-    return Object
-        .keys(options)
+    return Object.keys(options)
         .map(function processOption(key) {
-            return key + '=' + options[key];
+            return key + "=" + options[key];
         })
-        .join(',');
+        .join(",");
 }
 
 /**
@@ -33,7 +32,7 @@ function optionsToString(options) {
  */
 function defaultPopupName() {
     popupCount += 1;
-    return 'Popup ' + (popupCount);
+    return "Popup " + popupCount;
 }
 
 /**
@@ -49,8 +48,8 @@ function optionsResolveCentered(options) {
     var height = window.outerHeight - options.height;
 
     if (options.centered) {
-        result.left = options.left || Math.round(window.screenX + (width / 2));
-        result.top = options.top || Math.round(window.screenY + (height / 2.5));
+        result.left = options.left || Math.round(window.screenX + width / 2);
+        result.top = options.top || Math.round(window.screenY + height / 2.5);
         delete result.centered;
     }
     return result;
@@ -67,11 +66,9 @@ function assign(target) {
     var sources = Array.prototype.slice.call(arguments, 1);
 
     function assignArgument(previous, source) {
-        Object
-            .keys(source)
-            .forEach(function assignItem(key) {
-                previous[key] = source[key];  // eslint-disable-line no-param-reassign
-            });
+        Object.keys(source).forEach(function assignItem(key) {
+            previous[key] = source[key]; // eslint-disable-line no-param-reassign
+        });
 
         return previous;
     }
@@ -90,27 +87,25 @@ function assign(target) {
  * @return {Object}
  */
 function openPopupWithPost(url, postData, name, options) {
-    var form = document.createElement('form');
+    var form = document.createElement("form");
     var win;
 
-    form.setAttribute('method', 'post');
-    form.setAttribute('action', url);
-    form.setAttribute('target', name);
+    form.setAttribute("method", "post");
+    form.setAttribute("action", url);
+    form.setAttribute("target", name);
 
-    Object
-        .keys(postData)
-        .forEach(function addFormItem(key) {
-            var input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = key;
-            input.value = postData[key];
-            form.appendChild(input);
-        });
+    Object.keys(postData).forEach(function addFormItem(key) {
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = key;
+        input.value = postData[key];
+        form.appendChild(input);
+    });
 
     document.body.appendChild(form);
 
-    win = window.open('/', name, options);
-    win.document.write('Loading...');
+    win = window.open("/", name, options);
+    win.document.write("Loading...");
 
     form.submit();
     document.body.removeChild(form);
@@ -131,7 +126,7 @@ function openPopupWithPost(url, postData, name, options) {
  */
 function popupExecute(execute, url, name, options, callback) {
     var popupName = name || defaultPopupName();
-    var popupOptions = optionsResolveCentered(assign({ }, defaultOptions, options));
+    var popupOptions = optionsResolveCentered(assign({}, defaultOptions, options));
     var popupCallback = callback || function noop() {};
     var optionsString = optionsToString(popupOptions);
     var win = execute(url, popupName, optionsString);
@@ -150,23 +145,23 @@ function popupExecute(execute, url, name, options, callback) {
 
         if (data) {
             popupCallbackOnce(undefined, data);
-            window.removeEventListener('message', onMessage);
+            window.removeEventListener("message", onMessage);
         }
     }
 
-    window.addEventListener('message', onMessage, false);
+    window.addEventListener("message", onMessage, false);
 
     if (win) {
         interval = setInterval(function closePopupCallback() {
             if (win == null || win.closed) {
-                setTimeout(function delayWindowClosing () {
+                setTimeout(function delayWindowClosing() {
                     clearInterval(interval);
-                    popupCallbackOnce(new Error('Popup closed'));
+                    popupCallbackOnce(new Error("Popup closed"));
                 }, 500);
             }
         }, 100);
     } else {
-        popupCallbackOnce(new Error('Popup blocked'));
+        popupCallbackOnce(new Error("Popup blocked"));
     }
 
     return win;
@@ -219,10 +214,14 @@ function popupWithPost(url, postData, name, options, callback) {
 function popupResponse(data) {
     var jsonData = JSON.stringify(data);
 
-    return '<script>' +
-        'window.opener.postMessage(' + jsonData + ', "*");' +
-        'setTimeout(function() { window.close(); }, 50);' +
-    '</script>';
+    return (
+        "<script>" +
+        "window.opener.postMessage(" +
+        jsonData +
+        ', "*");' +
+        "setTimeout(function() { window.close(); }, 50);" +
+        "</script>"
+    );
 }
 
 return {

@@ -1,6 +1,6 @@
 {
   "name": "popup-tools",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Popups with callbacks, post and data response",
   "main": "lib/PopupTools.js",
   "repository": {
@@ -13,9 +13,8 @@
   "devDependencies": {
     "body-parser": "^1.15.2",
     "chai": "^3.5.0",
-    "eslint": "^3.8.1",
-    "eslint-config-airbnb-base": "^9.0.0",
     "express": "^4.14.0",
+    "prettier": "^1.4.4",
     "uglify-js": "^2.7.4",
     "umd": "^3.0.1",
     "wdio-mocha-framework": "^0.4.3",
@@ -23,7 +22,7 @@
     "webdriverio": "^4.2.16"
   },
   "scripts": {
-    "lint": "node_modules/.bin/eslint {src,test}",
+    "lint": "node_modules/.bin/prettier --write --tab-width=4 --trailing-comma=es5 --print-width=100 {src,test}/**/*.js",
     "test-selenium": "node_modules/.bin/wdio wdio.conf.js",
     "test": "node_modules/.bin/wdio wdio.travis.conf.js",
     "build": "mkdir -p lib/ && node_modules/.bin/umd popupTools < src/PopupTools.js > lib/PopupTools.js"
