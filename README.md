@@ -113,7 +113,8 @@ app.post('/popup-url', passport.authenticate('facebook'))
 app.get('/callback-url',
     passport.authenticate('facebook'),
     function (req, res) {
-        res.end(popupTools.popupResponse(req.user))
+        res.set({ "content-type": "text/html; charset=utf-8" });
+        res.end(popupTools.popupResponse(req.user));
     }
 );
 ```
