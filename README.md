@@ -94,6 +94,7 @@ document.getElementById("button").onclick = function () {
 
 And on the server:
 
+
 ```javascript
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
