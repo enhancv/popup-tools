@@ -1,13 +1,13 @@
 "use strict";
 
 var defaultOptions = {
-    width: 700,
-    height: 520,
-    menubar: "no",
-    resizable: "yes",
-    location: "yes",
-    scrollbars: "no",
-    centered: true,
+  width: 700,
+  height: 520,
+  menubar: "no",
+  resizable: "yes",
+  location: "yes",
+  scrollbars: "no",
+  centered: true
 };
 
 var popupCount = 1;
@@ -19,11 +19,11 @@ var popupCount = 1;
  * @return {String}
  */
 function optionsToString(options) {
-    return Object.keys(options)
-        .map(function processOption(key) {
-            return key + "=" + options[key];
-        })
-        .join(",");
+  return Object.keys(options)
+    .map(function processOption(key) {
+      return key + "=" + options[key];
+    })
+    .join(",");
 }
 
 /**
@@ -31,8 +31,8 @@ function optionsToString(options) {
  * @return {String}
  */
 function defaultPopupName() {
-    popupCount += 1;
-    return "Popup " + popupCount;
+  popupCount += 1;
+  return "Popup " + popupCount;
 }
 
 /**
@@ -43,16 +43,16 @@ function defaultPopupName() {
  * @return {Object}
  */
 function optionsResolveCentered(options) {
-    var result = options;
-    var width = window.outerWidth - options.width;
-    var height = window.outerHeight - options.height;
+  var result = options;
+  var width = window.outerWidth - options.width;
+  var height = window.outerHeight - options.height;
 
-    if (options.centered) {
-        result.left = options.left || Math.round(window.screenX + width / 2);
-        result.top = options.top || Math.round(window.screenY + height / 2.5);
-        delete result.centered;
-    }
-    return result;
+  if (options.centered) {
+    result.left = options.left || Math.round(window.screenX + width / 2);
+    result.top = options.top || Math.round(window.screenY + height / 2.5);
+    delete result.centered;
+  }
+  return result;
 }
 
 /**
@@ -63,17 +63,17 @@ function optionsResolveCentered(options) {
  * @return {Object}
  */
 function assign(target) {
-    var sources = Array.prototype.slice.call(arguments, 1);
+  var sources = Array.prototype.slice.call(arguments, 1);
 
-    function assignArgument(previous, source) {
-        Object.keys(source).forEach(function assignItem(key) {
-            previous[key] = source[key]; // eslint-disable-line no-param-reassign
-        });
+  function assignArgument(previous, source) {
+    Object.keys(source).forEach(function assignItem(key) {
+      previous[key] = source[key]; // eslint-disable-line no-param-reassign
+    });
 
-        return previous;
-    }
+    return previous;
+  }
 
-    return sources.reduce(assignArgument, target);
+  return sources.reduce(assignArgument, target);
 }
 
 /**
@@ -87,30 +87,30 @@ function assign(target) {
  * @return {Object}
  */
 function openPopupWithPost(url, postData, name, options) {
-    var form = document.createElement("form");
-    var win;
+  var form = document.createElement("form");
+  var win;
 
-    form.setAttribute("method", "post");
-    form.setAttribute("action", url);
-    form.setAttribute("target", name);
+  form.setAttribute("method", "post");
+  form.setAttribute("action", url);
+  form.setAttribute("target", name);
 
-    Object.keys(postData).forEach(function addFormItem(key) {
-        var input = document.createElement("input");
-        input.type = "hidden";
-        input.name = key;
-        input.value = postData[key];
-        form.appendChild(input);
-    });
+  Object.keys(postData).forEach(function addFormItem(key) {
+    var input = document.createElement("input");
+    input.type = "hidden";
+    input.name = key;
+    input.value = postData[key];
+    form.appendChild(input);
+  });
 
-    document.body.appendChild(form);
+  document.body.appendChild(form);
 
-    win = window.open("/", name, options);
-    win.document.write("Loading...");
+  win = window.open("/", name, options);
+  win.document.write("Loading...");
 
-    form.submit();
-    document.body.removeChild(form);
+  form.submit();
+  document.body.removeChild(form);
 
-    return win;
+  return win;
 }
 
 /**
@@ -124,47 +124,49 @@ function openPopupWithPost(url, postData, name, options) {
  * @param  {Function}
  * @return {Object}
  */
-function popupExecute(execute, url, name, options, callback) {
-    var popupName = name || defaultPopupName();
-    var popupOptions = optionsResolveCentered(assign({}, defaultOptions, options));
-    var popupCallback = callback || function noop() {};
-    var optionsString = optionsToString(popupOptions);
-    var win = execute(url, popupName, optionsString);
-    var isMessageSent = false;
-    var interval;
+function popupExecute(execute, url, name, options, callback, fromPopup) {
+  var popupName = name || defaultPopupName();
+  var popupOptions = optionsResolveCentered(
+    assign({}, defaultOptions, options)
+  );
+  var popupCallback = callback || function noop() {};
+  var optionsString = optionsToString(popupOptions);
+  var win = execute(url, popupName, optionsString);
+  var isMessageSent = false;
+  var interval;
 
-    function popupCallbackOnce(err, data) {
-        if (!isMessageSent) {
-            isMessageSent = true;
-            popupCallback(err, data);
-        }
+  function popupCallbackOnce(err, data) {
+    if (!isMessageSent) {
+      isMessageSent = true;
+      popupCallback(err, data);
     }
+  }
 
-    function onMessage(message) {
-        var data = message ? message.data : undefined;
+  function onMessage(message) {
+    var data = message ? message.data : undefined;
 
-        if (data) {
-            popupCallbackOnce(undefined, data);
-            window.removeEventListener("message", onMessage);
-        }
+    if (data && fromPopup) {
+      popupCallbackOnce(undefined, data);
+      window.removeEventListener("message", onMessage);
     }
+  }
 
-    window.addEventListener("message", onMessage, false);
+  window.addEventListener("message", onMessage, false);
 
-    if (win) {
-        interval = setInterval(function closePopupCallback() {
-            if (win == null || win.closed) {
-                setTimeout(function delayWindowClosing() {
-                    clearInterval(interval);
-                    popupCallbackOnce(new Error("Popup closed"));
-                }, 500);
-            }
-        }, 100);
-    } else {
-        popupCallbackOnce(new Error("Popup blocked"));
-    }
+  if (win) {
+    interval = setInterval(function closePopupCallback() {
+      if (win == null || win.closed) {
+        setTimeout(function delayWindowClosing() {
+          clearInterval(interval);
+          popupCallbackOnce(new Error("Popup closed"));
+        }, 500);
+      }
+    }, 100);
+  } else {
+    popupCallbackOnce(new Error("Popup blocked"));
+  }
 
-    return win;
+  return win;
 }
 
 /**
@@ -179,8 +181,8 @@ function popupExecute(execute, url, name, options, callback) {
  * @param  {Function} callback
  * @return {Object}
  */
-function popup(url, name, options, callback) {
-    return popupExecute(window.open, url, name, options, callback);
+function popup(url, name, options, callback, fromPopup) {
+  return popupExecute(window.open, url, name, options, callback, fromPopup);
 }
 
 /**
@@ -198,11 +200,11 @@ function popup(url, name, options, callback) {
  * @return {Object}
  */
 function popupWithPost(url, postData, name, options, callback) {
-    function openWithPostData(popupUrl, popupName, optionsString) {
-        return openPopupWithPost(popupUrl, postData, popupName, optionsString);
-    }
+  function openWithPostData(popupUrl, popupName, optionsString) {
+    return openPopupWithPost(popupUrl, postData, popupName, optionsString);
+  }
 
-    return popupExecute(openWithPostData, url, name, options, callback);
+  return popupExecute(openWithPostData, url, name, options, callback);
 }
 
 /**
@@ -212,20 +214,20 @@ function popupWithPost(url, postData, name, options, callback) {
  * @return {String}
  */
 function popupResponse(data) {
-    var jsonData = JSON.stringify(data);
+  var jsonData = JSON.stringify(data);
 
-    return (
-        "<script>" +
-        "window.opener.postMessage(" +
-        jsonData +
-        ', "*");' +
-        "setTimeout(function() { window.close(); }, 50);" +
-        "</script>"
-    );
+  return (
+    "<script>" +
+    "window.opener.postMessage(" +
+    jsonData +
+    ', "*");' +
+    "setTimeout(function() { window.close(); }, 50);" +
+    "</script>"
+  );
 }
 
 return {
-    popup: popup,
-    popupWithPost: popupWithPost,
-    popupResponse: popupResponse,
+  popup: popup,
+  popupWithPost: popupWithPost,
+  popupResponse: popupResponse
 };
